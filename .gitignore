@@ -1,0 +1,4 @@
+temp/
+
+.zig-cache/
+zig-out/
