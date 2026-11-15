@@ -24,9 +24,9 @@ Selected established Zig projects for relevant practices, not an exhaustive popu
 
 ## Current limits
 
-- Workspace empty build and central understanding: verified in the follow-ups below. Application tests: not run; no application source or tests exist.
+- CP0 and CP1 verified within their learning scope. CP1 development executable builds and runs, README reviewed, and compile/run distinction demonstrated after explanation. Application tests: not run; no tests exist for the diagnostic-only program.
 - Real-model inference, cache contribution, performance, retention, persistence, restart recovery, and production readiness: unproven.
-- No model downloads, GPU/cloud spending, services, commits, pushes, publication, or settings changes performed.
+- No agent-performed model downloads, GPU/cloud spending, services, commits, pushes, publication, or settings changes. Nibras has independently committed and published the repository, as recorded below.
 - Agent changes are mentoring records only. Readback checks verify file access; automatic instruction reload is not assumed.
 
 ## CP0 — user attempt review, 2026-11-15
@@ -55,3 +55,33 @@ Selected established Zig projects for relevant practices, not an exhaustive popu
 - Read installed Zig 0.16.0 init template and std.Build APIs for createModule, addExecutable, installArtifact, addRunArtifact, step, dependOn; inspected std.debug.print, which writes diagnostic output to stderr and ignores output errors. Opened official build guide sections Simple Executable and Adding a Convenience Step for Running the Application. Guide is unversioned; selected APIs checked against installed 0.16.0 sources.
 - Assigned a development executable and short README; no product code or build configuration edited by the agent. User code, build/run commands, and understanding have not been verified for CP1. This remains setup, with no AI inference claim.
 - Marketing follow-up's report of stale engineering records refers to its inspection snapshot; current engineering records now reflect initialized Git and verified CP0. PUBLISHING preserved.
+
+## CP1 — executable review, 2026-11-15
+
+- Inspected revision `5c01d573dc53cb6e64927cf2bf1455ea5fa1cc52`, commit `setup: project first stepup to github`. `git status --short --branch`: main tracking origin/main, clean before agent record updates. User created origin and commit; no agent Git mutations.
+- `gh repo view --json nameWithOwner,url,visibility,defaultBranchRef`: user-created https://github.com/ahammednibras8/kvkeep, PUBLIC, default branch main. GitHub setup no longer pending creation or visibility selection. PUBLISHING's earlier no-commit observation is historical; left marketing-owned record unchanged.
+- `gh api repos/ahammednibras8/kvkeep/commits/main --jq .sha`: remote main SHA matches local HEAD, `5c01d573dc53cb6e64927cf2bf1455ea5fa1cc52`.
+- Current `build.zig` contains correct compile/install/run wiring, including `run_step.dependOn(&run_exe.step)`. `src/main.zig` prints the development message via std.debug.print. No owned allocations or fallible resources to clean up; debug output ignores write errors as previously taught. `!void` main is valid, though this body has no fallible operation.
+- `zig fmt --check build.zig build.zig.zon src/main.zig`: exit 0.
+- `zig build --summary all`: exit 0; 3/3 steps succeeded, compile/install cached.
+- `./zig-out/bin/kvkeep`: exit 0, stdout empty, stderr `KVKeep development build` followed by newline.
+- `zig build run --summary all`: exit 0, expected diagnostic; 3/3 steps succeeded. This proves local setup only, not inference or cache functionality.
+- In an isolated temporary copy, removing only the dependency connection made `zig build run --summary all` exit 2 with unused-local-constant errors for run_step and run_exe. Discarding those two results without adding a connection made the same command exit 0 with 1/1 empty run step and no application output. Temporary files removed; product build left unchanged. Compiler global cache may retain experiment artifacts.
+- Nibras's Turbo analogy shows familiarity with task dependencies, but prediction that the disconnected action executes needs correction. Asked why registering the action alone does not launch the application. CP1 understanding not certified yet.
+- README contains only a one-line product description. Requested setup-only/experimental limitation, Zig 0.16.0, and actual build/run/format commands. No product-code bugs found; no tests added for a diagnostic-only executable. Agent edits restricted to STATUS and EVIDENCE.
+
+## CP1 — README review, 2026-11-15
+
+- Inspected actual README diff at unchanged HEAD `5c01d573dc53cb6e64927cf2bf1455ea5fa1cc52`: README now includes experimental/setup-only status, proposed versus implemented behavior, Zig 0.16.0, expected stderr diagnostic, and build/run/format commands. Local status/evidence links exist. Nibras accepted the current README; no further expansion requested or agent edits made.
+- Build and application files match HEAD and the previously verified implementation. No checks rerun for this documentation-only change; earlier build/run/format results remain applicable. Git working tree includes uncommitted README and shared-record changes, including marketing-owned PUBLISHING.
+- Central CP1 understanding question remains unanswered. Asked what the existing `run_step.dependOn(&run_exe.step)` connects; no additional implementation task assigned. Checkpoint not advanced or marked fully verified. Agent edits only STATUS and EVIDENCE.
+- Follow-up: Nibras correctly identified the named command but described run_exe as pointing to build configuration. Read installed Zig 0.16.0 `Build.addRunArtifact` and `Step.dependOn`; clarified compilation/execution/named-step roles and offered these exact source locations. No code changed or tests rerun. Understanding remains partial; no automatic advancement.
+- CP1 closure: Nibras answered `exe and run_exe` when asked which variables describe compilation and execution, respectively. This demonstrates the central distinction after explanation; independent application to a new task is not yet tested. Prior successful build/run/format checks still apply to unchanged source. CP1 marked verified; only records updated, no new checkpoint assigned. GitHub repository and committed baseline previously verified; current README/shared-record changes remain uncommitted. Restricted permission configuration remains unresolved.
+
+## CP2 — test workflow experiment assigned, 2026-11-15
+
+- Inspected current build/source/manifest, shared records and Git: Zig 0.16.0; unchanged committed executable, same HEAD 5c01d573dc53cb6e64927cf2bf1455ea5fa1cc52; README and shared records have uncommitted changes. No tests or named test step exist yet.
+- Read installed 0.16.0 APIs: std.mem.startsWith (mem.zig:3174), std.testing.expect (testing.zig:614), std.Build.addTest (Build.zig:881), and associated source comments. addTest compiles a test executable but does not execute tests; selected build APIs match installed compiler.
+- Verified official Zig 0.16.0 language reference sections Test Declarations and Test Failure. Unversioned build-system Testing page currently includes an outdated ArrayList example and failing compiler output; do not assign that example or infer it works on 0.16.0.
+- Assigned two user-written exact-byte-prefix tests and compile/run/named-step wiring in build.zig. Test-only experiment, no production cache-matching policy or inference reuse established. User must demonstrate that the connected runner reports a deliberate assertion failure, then restore correct expectations and pass.
+- Agent changed STATUS/EVIDENCE only. No test file or product build/source edits, test execution, commits, pushes, or new services performed for CP2.
